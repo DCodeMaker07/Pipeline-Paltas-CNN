@@ -1,0 +1,9 @@
+# Versiones fijadas. Revisadas con pip-audit (sin vulnerabilidades conocidas al 2026-11-14).
+torch==2.15.0
+torchvision==0.29.2
+scikit-learn==1.9.1
+pandas==3.1.1
+matplotlib==3.11.2
+pyyaml==6.0.3
+pillow==13.0.0
+numpy==2.5.4

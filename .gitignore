@@ -1,0 +1,10 @@
+# Entorno virtual y cachés de Python
+.venv/
+__pycache__/
+*.pyc
+
+# Dataset (no subirlo al repositorio)
+dataset/
+
+# Resultados generados por la corrida (se comparten aparte)
+resultados/
