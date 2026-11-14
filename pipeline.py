@@ -49,26 +49,28 @@ def cargar(carpeta):
 
 
 class PaltaCNN(nn.Module):
-    """Arquitectura de la diapositiva 4: 4 bloques conv, GAP, Dense(64), Dropout(0.3), Dense(2)."""
+    """Arquitectura elegida por la búsqueda: 4 bloques conv (32 filtros base, canales x2 por bloque),
+    BatchNorm, GELU, MaxPool; GAP, Dense(64), GELU, Dropout(0.3), Dense(2) con salida en logits."""
 
-    def __init__(self):
+    def __init__(self, filtros=32, dropout=0.3):
         super().__init__()
 
         def bloque(cin, cout):
             return nn.Sequential(
                 nn.Conv2d(cin, cout, 3, padding=1),
                 nn.BatchNorm2d(cout),
-                nn.ReLU(),
+                nn.GELU(),
                 nn.MaxPool2d(2),
             )
 
-        self.features = nn.Sequential(bloque(3, 16), bloque(16, 32), bloque(32, 64), bloque(64, 128))
+        c = [filtros * 2 ** i for i in range(4)]
+        self.features = nn.Sequential(bloque(3, c[0]), bloque(c[0], c[1]), bloque(c[1], c[2]), bloque(c[2], c[3]))
         self.clf = nn.Sequential(
             nn.AdaptiveAvgPool2d(1),
             nn.Flatten(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Dropout(0.3),
+            nn.Linear(c[3], 64),
+            nn.GELU(),
+            nn.Dropout(dropout),
             nn.Linear(64, 2),
         )
 
@@ -84,13 +86,13 @@ def contar_parametros(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
-def crear_optimizador(nombre, params, lr):
+def crear_optimizador(nombre, params, lr, wd=0.0):
     if nombre == "sgd":
-        return torch.optim.SGD(params, lr=lr, momentum=0.9)
+        return torch.optim.SGD(params, lr=lr, momentum=0.9, weight_decay=wd)
     if nombre == "adam":
-        return torch.optim.Adam(params, lr=lr)
+        return torch.optim.Adam(params, lr=lr, weight_decay=wd)
     if nombre == "adamw":
-        return torch.optim.AdamW(params, lr=lr, weight_decay=1e-4)
+        return torch.optim.AdamW(params, lr=lr, weight_decay=wd)
     raise ValueError(nombre)
 
 
@@ -104,12 +106,12 @@ def predecir(model, X, dev):
     return torch.cat(salida).numpy()
 
 
-def entrenar(Xtr, Ytr, Xva, Yva, epochs, opt_nombre, lr, dev, batch=32):
+def entrenar(Xtr, Ytr, Xva, Yva, epochs, opt_nombre, lr, dev, batch=16, wd=0.0):
     model = PaltaCNN().to(dev)
     # pos_weight = N_neg / N_pos por etiqueta: castiga más los falsos negativos de la clase minoritaria.
     pos_weight = ((1 - Ytr).sum(0) / Ytr.sum(0).clamp(min=1)).to(dev)
     crit = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
-    opt = crear_optimizador(opt_nombre, model.parameters(), lr)
+    opt = crear_optimizador(opt_nombre, model.parameters(), lr, wd)
     dl = DataLoader(TensorDataset(Xtr, Ytr), batch_size=batch, shuffle=True)
     historial = []
     for ep in range(1, epochs + 1):
@@ -147,7 +149,9 @@ def main():
     ap.add_argument("--data", required=True, help="carpeta con las imágenes A.*, R.*, S.*")
     ap.add_argument("--modo", choices=["simple", "kfold"], default="kfold")
     ap.add_argument("--opt", choices=["sgd", "adam", "adamw"], default="adam")
-    ap.add_argument("--lr", type=float, default=1e-3)
+    ap.add_argument("--lr", type=float, default=0.00012349482735064392)
+    ap.add_argument("--batch", type=int, default=16)
+    ap.add_argument("--wd", type=float, default=0.0)
     ap.add_argument("--epochs", type=int, default=10)
     ap.add_argument("--k", type=int, default=5)
     ap.add_argument("--out", default="resultados")
@@ -180,7 +184,7 @@ def main():
         print(f"\nFold {f}/{len(splits)}  train={len(itr)}  val={len(iva)}")
         fijar_semilla(SEED + f)
         model, hist = entrenar(X[t(itr)], Y[t(itr)], X[t(iva)], Y[t(iva)],
-                               args.epochs, args.opt, args.lr, dev)
+                               args.epochs, args.opt, args.lr, dev, args.batch, args.wd)
         m_va = metricas(Y[t(iva)].numpy(), predecir(model, X[t(iva)], dev))
         m_te = metricas(Yte.numpy(), predecir(model, Xte, dev))
         fila = {f"val_{k}": v for k, v in m_va.items()}
@@ -206,6 +210,8 @@ def main():
         "modo": args.modo,
         "epocas": args.epochs,
         "lr": args.lr,
+        "batch": args.batch,
+        "wd": args.wd,
         "parametros_entrenables": contar_parametros(PaltaCNN()),
         "segundos": round(time.time() - t0, 1),
         "folds": resultados,
