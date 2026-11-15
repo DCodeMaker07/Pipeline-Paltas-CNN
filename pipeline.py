@@ -1,12 +1,3 @@
-"""Pipeline de la CNN multietiqueta para roña (R) y antracnosis (A) en palta.
-
-Etiquetas por prefijo del nombre: A.* = antracnosis, R.* = roña, S.* = sano.
-Salida por imagen: [antracnosis, roña]. Sano = [0, 0]; co-infección = [1, 1].
-
-Uso (PowerShell, dentro de pipeline-palta):
-  .\.venv\Scripts\python.exe pipeline.py --data dataset --modo simple --epochs 2
-  .\.venv\Scripts\python.exe pipeline.py --data dataset --modo kfold --opt adam --epochs 10
-"""
 import argparse
 import csv
 import json
@@ -164,7 +155,6 @@ def main():
     out.mkdir(exist_ok=True)
 
     X, Y, clases = cargar(args.data)
-    print("AVISO: los nombres no tienen ID de fruto, así que la partición es por imagen y puede haber fuga de datos.")
 
     t = lambda a: torch.as_tensor(a, dtype=torch.long)
     idx = np.arange(len(X))
