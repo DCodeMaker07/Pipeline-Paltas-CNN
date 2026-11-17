@@ -1,0 +1,17 @@
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Get-CimInstance Win32_Processor | Select-Object Name, NumberOfCores, NumberOfLogicalProcessors
+
+Name                                           NumberOfCores NumberOfLogicalProcessors
+----                                           ------------- -------------------------
+11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz             4                         8
+
+
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Get-CimInstance Win32_PhysicalMemory | Measure-Object Capacity -Sum | ForEach-Object { "RAM total: {0:N1} GB" -f ($_.Sum / 1GB) }
+RAM total: 8.0 GB
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Get-CimInstance Win32_VideoController | Select-Object Name, @{N='VRAM_GB';E={[math]::Round($_.AdapterRAM/1GB,1)}}
+
+Name                         VRAM_GB
+----                         -------
+Intel(R) Iris(R) Xe Graphics       1
+
+
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> .\venv\Scripts\python.exe -c "import torch; print('CUDA disponible:', torch.cuda.is_available())"

@@ -1,0 +1,6 @@
+CUDA disponible: False
+Name                                            NumberOfCores NumberOfLogicalProcessors
+----                                            ------------- -------------------------
+Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz                    4                         8
+RAM total: 32.0 GB
+NVIDIA Quadro M1200 (4 GB) + Intel HD Graphics 530

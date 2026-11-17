@@ -1,0 +1,137 @@
+{
+  "optimizador": "adam",
+  "modo": "kfold",
+  "epocas": 15,
+  "lr": 0.00012349482735064392,
+  "batch": 16,
+  "wd": 0.0,
+  "parametros_entrenables": 405954,
+  "segundos": 1299.2,
+  "folds": [
+    {
+      "val_F1_antracnosis": 0.5555555555555556,
+      "val_AUC_antracnosis": 0.7997347480106101,
+      "val_F1_roña": 0.7428571428571429,
+      "val_AUC_roña": 0.9308333333333333,
+      "val_subset_accuracy": 0.6728971962616822,
+      "val_hamming_loss": 0.19626168224299065,
+      "test_F1_antracnosis": 0.5833333333333334,
+      "test_AUC_antracnosis": 0.8409812409812409,
+      "test_F1_roña": 0.7415730337078652,
+      "test_AUC_roña": 0.8998164175190139,
+      "test_subset_accuracy": 0.6343283582089553,
+      "test_hamming_loss": 0.19776119402985073,
+      "fold": 1
+    },
+    {
+      "val_F1_antracnosis": 0.49230769230769234,
+      "val_AUC_antracnosis": 0.7877984084880636,
+      "val_F1_roña": 0.7457627118644068,
+      "val_AUC_roña": 0.9375,
+      "val_subset_accuracy": 0.5981308411214953,
+      "val_hamming_loss": 0.22429906542056074,
+      "test_F1_antracnosis": 0.6265060240963856,
+      "test_AUC_antracnosis": 0.86002886002886,
+      "test_F1_roña": 0.7532467532467533,
+      "test_AUC_roña": 0.8979805927091529,
+      "test_subset_accuracy": 0.6716417910447762,
+      "test_hamming_loss": 0.1865671641791045,
+      "fold": 2
+    },
+    {
+      "val_F1_antracnosis": 0.6521739130434783,
+      "val_AUC_antracnosis": 0.8828470380194517,
+      "val_F1_roña": 0.6956521739130435,
+      "val_AUC_roña": 0.8920833333333333,
+      "val_subset_accuracy": 0.7009345794392523,
+      "val_hamming_loss": 0.17289719626168223,
+      "test_F1_antracnosis": 0.5283018867924528,
+      "test_AUC_antracnosis": 0.8793650793650793,
+      "test_F1_roña": 0.7469879518072289,
+      "test_AUC_roña": 0.8853920797272489,
+      "test_subset_accuracy": 0.6865671641791045,
+      "test_hamming_loss": 0.17164179104477612,
+      "fold": 3
+    },
+    {
+      "val_F1_antracnosis": 0.21052631578947367,
+      "val_AUC_antracnosis": 0.8083182640144666,
+      "val_F1_roña": 0.7397260273972602,
+      "val_AUC_roña": 0.8947583947583948,
+      "val_subset_accuracy": 0.6355140186915887,
+      "val_hamming_loss": 0.22897196261682243,
+      "test_F1_antracnosis": 0.23255813953488372,
+      "test_AUC_antracnosis": 0.8288600288600289,
+      "test_F1_roña": 0.7272727272727273,
+      "test_AUC_roña": 0.930763178599528,
+      "test_subset_accuracy": 0.664179104477612,
+      "test_hamming_loss": 0.22388059701492538,
+      "fold": 4
+    },
+    {
+      "val_F1_antracnosis": 0.5137614678899083,
+      "val_AUC_antracnosis": 0.810126582278481,
+      "val_F1_roña": 0.8070175438596491,
+      "val_AUC_roña": 0.9565929565929566,
+      "val_subset_accuracy": 0.4953271028037383,
+      "val_hamming_loss": 0.29906542056074764,
+      "test_F1_antracnosis": 0.4892086330935252,
+      "test_AUC_antracnosis": 0.7812409812409813,
+      "test_F1_roña": 0.7945205479452054,
+      "test_AUC_roña": 0.9055861526357198,
+      "test_subset_accuracy": 0.44776119402985076,
+      "test_hamming_loss": 0.3208955223880597,
+      "fold": 5
+    }
+  ],
+  "resumen": {
+    "val_F1_antracnosis": {
+      "media": 0.4848649889172217,
+      "desv": 0.1651828836533957
+    },
+    "val_AUC_antracnosis": {
+      "media": 0.8177650081622148,
+      "desv": 0.03743776339632877
+    },
+    "val_F1_roña": {
+      "media": 0.7462031199783005,
+      "desv": 0.03970873502964533
+    },
+    "val_AUC_roña": {
+      "media": 0.9223536036036035,
+      "desv": 0.028068831676173512
+    },
+    "val_subset_accuracy": {
+      "media": 0.6205607476635514,
+      "desv": 0.08001441044113641
+    },
+    "val_hamming_loss": {
+      "media": 0.22429906542056072,
+      "desv": 0.04753969614340141
+    },
+    "test_F1_antracnosis": {
+      "media": 0.4919816033701161,
+      "desv": 0.15416658545167528
+    },
+    "test_AUC_antracnosis": {
+      "media": 0.838095238095238,
+      "desv": 0.03711572508483053
+    },
+    "test_F1_roña": {
+      "media": 0.752720202795956,
+      "desv": 0.025259840659410292
+    },
+    "test_AUC_roña": {
+      "media": 0.9039076842381327,
+      "desv": 0.016723720588732387
+    },
+    "test_subset_accuracy": {
+      "media": 0.6208955223880597,
+      "desv": 0.09863740863746015
+    },
+    "test_hamming_loss": {
+      "media": 0.22014925373134328,
+      "desv": 0.059467826307870245
+    }
+  }
+}

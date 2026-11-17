@@ -1,0 +1,362 @@
+PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> C:\Users\emili\AppData\Local\Python\bin\python.exe -m venv venv
+PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> .\venv\Scripts\Activate.ps1
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> pip install -r requirements.txt
+Collecting torch==2.15.0 (from -r requirements.txt (line 2))
+  Downloading torch-2.15.0-cp314-cp314-win_amd64.whl.metadata (36 kB)
+Collecting torchvision==0.29.2 (from -r requirements.txt (line 3))
+  Downloading torchvision-0.29.2-py3-none-win_amd64.whl.metadata (5.7 kB)
+Collecting scikit-learn==1.9.1 (from -r requirements.txt (line 4))
+  Downloading scikit_learn-1.9.1-cp314-cp314-win_amd64.whl.metadata (9.3 kB)
+Collecting pandas==3.1.1 (from -r requirements.txt (line 5))
+  Downloading pandas-3.1.1-cp314-cp314-win_amd64.whl.metadata (16 kB)
+Collecting matplotlib==3.11.2 (from -r requirements.txt (line 6))
+  Downloading matplotlib-3.11.2-cp314-cp314-win_amd64.whl.metadata (80 kB)
+Collecting pyyaml==6.0.3 (from -r requirements.txt (line 7))
+  Downloading pyyaml-6.0.3-cp314-cp314-win_amd64.whl.metadata (2.4 kB)
+Collecting pillow==13.0.0 (from -r requirements.txt (line 8))
+  Downloading pillow-13.0.0-cp314-cp314-win_amd64.whl.metadata (9.3 kB)
+Collecting numpy==2.5.4 (from -r requirements.txt (line 9))
+  Downloading numpy-2.5.4-cp314-cp314-win_amd64.whl.metadata (6.6 kB)
+Collecting filelock (from torch==2.15.0->-r requirements.txt (line 2))
+  Downloading filelock-4.2.10-py3-none-any.whl.metadata (2.3 kB)
+Collecting typing-extensions>=4.13.0 (from torch==2.15.0->-r requirements.txt (line 2))
+  Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting setuptools>=77.0.3 (from torch==2.15.0->-r requirements.txt (line 2))
+  Downloading setuptools-84.2.1-py3-none-any.whl.metadata (6.6 kB)
+Collecting sympy>=1.13.3 (from torch==2.15.0->-r requirements.txt (line 2))
+  Using cached sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx>=2.5.1 (from torch==2.15.0->-r requirements.txt (line 2))
+  Downloading networkx-3.7-py3-none-any.whl.metadata (6.7 kB)
+Collecting jinja2 (from torch==2.15.0->-r requirements.txt (line 2))
+  Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec>=0.8.5 (from torch==2.15.0->-r requirements.txt (line 2))
+  Downloading fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+Collecting scipy>=1.10.0 (from scikit-learn==1.9.1->-r requirements.txt (line 4))
+  Downloading scipy-1.18.1-cp314-cp314-win_amd64.whl.metadata (61 kB)
+Collecting joblib>=1.4.0 (from scikit-learn==1.9.1->-r requirements.txt (line 4))
+  Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting narwhals>=2.0.1 (from scikit-learn==1.9.1->-r requirements.txt (line 4))
+  Downloading narwhals-2.28.0-py3-none-any.whl.metadata (15 kB)
+Collecting threadpoolctl>=3.5.0 (from scikit-learn==1.9.1->-r requirements.txt (line 4))
+  Downloading threadpoolctl-3.8.0-py3-none-any.whl.metadata (29 kB)
+Collecting python-dateutil>=2.9.0 (from pandas==3.1.1->-r requirements.txt (line 5))
+  Downloading python_dateutil-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting tzdata (from pandas==3.1.1->-r requirements.txt (line 5))
+  Downloading tzdata-2026.6-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting contourpy>=1.0.1 (from matplotlib==3.11.2->-r requirements.txt (line 6))
+  Downloading contourpy-1.4.0-cp314-cp314-win_amd64.whl.metadata (3.8 kB)
+Collecting cycler>=0.10 (from matplotlib==3.11.2->-r requirements.txt (line 6))
+  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.28.2 (from matplotlib==3.11.2->-r requirements.txt (line 6))
+  Downloading fonttools-4.68.0-cp314-cp314-win_amd64.whl.metadata (142 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib==3.11.2->-r requirements.txt (line 6))
+  Downloading kiwisolver-1.5.1-cp314-cp314-win_amd64.whl.metadata (5.2 kB)
+Collecting packaging>=20.0 (from matplotlib==3.11.2->-r requirements.txt (line 6))
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pyparsing>=3 (from matplotlib==3.11.2->-r requirements.txt (line 6))
+  Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting cloudpickle>=3.0 (from joblib>=1.4.0->scikit-learn==1.9.1->-r requirements.txt (line 4))
+  Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch==2.15.0->-r requirements.txt (line 2))
+  Using cached mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch==2.15.0->-r requirements.txt (line 2))
+  Downloading markupsafe-3.0.4-cp314-cp314-win_amd64.whl.metadata (2.8 kB)
+Downloading torch-2.15.0-cp314-cp314-win_amd64.whl (126.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 126.7/126.7 MB 67.8 MB/s  0:00:01
+Downloading torchvision-0.29.2-py3-none-win_amd64.whl (1.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 48.4 MB/s  0:00:00
+Downloading scikit_learn-1.9.1-cp314-cp314-win_amd64.whl (8.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.4/8.4 MB 57.3 MB/s  0:00:00
+Downloading pandas-3.1.1-cp314-cp314-win_amd64.whl (10.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.9/10.9 MB 50.6 MB/s  0:00:00
+Downloading matplotlib-3.11.2-cp314-cp314-win_amd64.whl (9.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 66.3 MB/s  0:00:00
+Downloading pyyaml-6.0.3-cp314-cp314-win_amd64.whl (156 kB)
+Downloading pillow-13.0.0-cp314-cp314-win_amd64.whl (7.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.3/7.3 MB 48.1 MB/s  0:00:00
+Downloading numpy-2.5.4-cp314-cp314-win_amd64.whl (12.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.7/12.7 MB 51.4 MB/s  0:00:00
+Downloading contourpy-1.4.0-cp314-cp314-win_amd64.whl (240 kB)
+Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.68.0-cp314-cp314-win_amd64.whl (2.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.5/2.5 MB 74.6 MB/s  0:00:00
+Downloading fsspec-2026.9.0-py3-none-any.whl (221 kB)
+Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+Downloading kiwisolver-1.5.1-cp314-cp314-win_amd64.whl (72 kB)
+Downloading narwhals-2.28.0-py3-none-any.whl (490 kB)
+Downloading networkx-3.7-py3-none-any.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 58.1 MB/s  0:00:00
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)
+Downloading python_dateutil-4.0.0-py3-none-any.whl (92 kB)
+Downloading scipy-1.18.1-cp314-cp314-win_amd64.whl (37.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.4/37.4 MB 61.6 MB/s  0:00:00
+Downloading setuptools-84.2.1-py3-none-any.whl (876 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 876.3/876.3 kB 68.5 MB/s  0:00:00
+Using cached sympy-1.14.0-py3-none-any.whl (6.3 MB)
+Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)
+Downloading threadpoolctl-3.8.0-py3-none-any.whl (32 kB)
+Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading filelock-4.2.10-py3-none-any.whl (218 kB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markupsafe-3.0.4-cp314-cp314-win_amd64.whl (14 kB)
+Downloading tzdata-2026.6-py2.py3-none-any.whl (348 kB)
+Installing collected packages: mpmath, tzdata, typing-extensions, threadpoolctl, sympy, setuptools, pyyaml, pyparsing, pillow, packaging, numpy, networkx, narwhals, MarkupSafe, kiwisolver, fsspec, fonttools, filelock, cycler, cloudpickle, scipy, python-dateutil, joblib, jinja2, contourpy, torch, scikit-learn, pandas, matplotlib, torchvision
+Successfully installed MarkupSafe-3.0.4 cloudpickle-3.1.2 contourpy-1.4.0 cycler-0.12.1 filelock-4.2.10 fonttools-4.68.0 fsspec-2026.9.0 jinja2-3.1.6 joblib-1.6.0 kiwisolver-1.5.1 matplotlib-3.11.2 mpmath-1.3.0 narwhals-2.28.0 networkx-3.7 numpy-2.5.4 packaging-26.3 pandas-3.1.1 pillow-13.0.0 pyparsing-3.3.3 python-dateutil-4.0.0 pyyaml-6.0.3 scikit-learn-1.9.1 scipy-1.18.1 setuptools-84.2.1 sympy-1.14.0 threadpoolctl-3.8.0 torch-2.15.0 torchvision-0.29.2 typing-extensions-4.16.0 tzdata-2026.6
+
+[notice] A new release of pip is available: 26.0.1 -> 26.3
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> type README.md
+# Pipeline: CNN multietiqueta para roÃ±a y antracnosis en palta
+
+Clasifica frutos de palta en tres casos: sano, roÃ±a (R), antracnosis (A). La salida es
+multietiqueta: cada fruto tiene dos probabilidades independientes, asÃ­ que la co-infecciÃ³n
+(ambas enfermedades) se puede representar. El dataset actual no tiene co-infecciones.
+
+## 0. ConfiguraciÃ³n vigente
+
+La arquitectura y los hiperparÃ¡metros se eligieron con la bÃºsqueda de `experimentos.py buscar`.
+Los valores por defecto de `pipeline.py` ya son esa configuraciÃ³n, asÃ­ que **no hace falta pasar
+`--lr`, `--batch` ni `--wd`**.
+
+| Elemento | Valor |
+|---|---|
+| Bloques convolucionales | 4: Conv3Ã—3 (pad 1) â†’ BatchNorm â†’ GELU â†’ MaxPool2 |
+| Filtros | 32, 64, 128, 256 |
+| Clasificador | GlobalAvgPool â†’ Dense 256â†’64 â†’ GELU â†’ Dropout 0.3 â†’ Dense 64â†’2 (sigmoide) |
+| InicializaciÃ³n | la por defecto de PyTorch |
+| ParÃ¡metros entrenables | 405,954 |
+| Learning rate (`--lr`) | 0.00012349482735064392 |
+| Batch (`--batch`) | 16 |
+| Weight decay (`--wd`) | 0 |
+
+Las corridas anteriores con 16 filtros y lr 1e-3 **no son comparables** con estas. EstÃ¡n en
+`resultados_v1_16filtros\` solo como referencia.
+
+## 1. Preparar el entorno (una sola vez por persona)
+
+Requisito: **Python 3.12** instalado en Windows (la 3.12.10 con instalador).
+Verifiquen con `py --list`; debe aparecer `-V:3.12`.
+
+1. Abran PowerShell en la carpeta `pipeline-palta`.
+2. Si Windows bloquea scripts, ejecuten una vez:
+   `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+3. Creen el entorno:
+   `.\crear_entorno.ps1`
+4. Debe terminar con `OK torch 2.15.0`.
+
+El entorno queda en `.venv` y no se sube al repositorio.
+
+## 2. Colocar el dataset
+
+Dentro de `pipeline-palta` debe existir la carpeta `dataset` con las 669 imÃ¡genes.
+El prefijo del nombre define la clase: `A.*` antracnosis, `R.*` roÃ±a, `S.*` sano.
+La carpeta `dataset` no se sube al repositorio: se comparte por fuera del equipo.
+
+## 3. Ejecutar
+
+Prueba corta (verifica que todo funciona, unos minutos):
+
+    .\.venv\Scripts\python.exe pipeline.py --data dataset --modo simple --epochs 2
+
+ValidaciÃ³n cruzada de 5 folds (la corrida real):
+
+    .\.venv\Scripts\python.exe pipeline.py --data dataset --modo kfold --opt adam --epochs 15
+
+Opciones de `--opt`: `sgd`, `adam`, `adamw`. Para AdamW con decaimiento distinto de cero use
+`--wd 0.0001` y, para no sobrescribir resultados, `--out resultados_adamw_wd`.
+
+## 4. Comparar optimizadores (reparto del equipo)
+
+Cada integrante corre **un** optimizador con el mismo comando, cambiando solo `--opt`:
+
+    .\.venv\Scripts\python.exe pipeline.py --data dataset --modo kfold --opt sgd --epochs 15
+    .\.venv\Scripts\python.exe pipeline.py --data dataset --modo kfold --opt adam --epochs 15
+    .\.venv\Scripts\python.exe pipeline.py --data dataset --modo kfold --opt adamw --epochs 15
+
+Reglas para que la comparaciÃ³n sea vÃ¡lida:
+
+- Todos usan la **misma versiÃ³n** de `pipeline.py` y el **mismo dataset**.
+- Todos usan **15 Ã©pocas**, sin cambiarlas.
+- No cambien `SEED`, la particiÃ³n, `--lr`, `--batch` ni `--wd`.
+
+Nota: con `--wd 0` (valor por defecto), AdamW es matemÃ¡ticamente igual a Adam. Con
+`--wd 0.0001` y el learning rate de la configuraciÃ³n, el decaimiento es prÃ¡cticamente nulo, y los
+resultados de Adam y AdamW coincidieron hasta la cuarta cifra decimal. Por eso el informe toma Adam
+como representante del optimizador adaptativo.
+
+## 5. QuÃ© compartir
+
+Cada corrida crea en `resultados\`:
+
+- `resumen_<opt>_<modo>.json`: mÃ©tricas por fold, media y desviaciÃ³n estÃ¡ndar, tiempo total y
+  el nÃºmero de parÃ¡metros entrenables.
+- `historial_<opt>_fold<N>.csv`: pÃ©rdida de entrenamiento y validaciÃ³n por Ã©poca.
+
+Compartan **los dos tipos de archivo** de su corrida (no las imÃ¡genes) en la carpeta del equipo,
+junto con la consola o las Ãºltimas lÃ­neas de la salida. Si usaron `--out` con otra carpeta,
+compartan esa carpeta.
+
+## Problemas frecuentes
+
+- **`py` no se reconoce:** reinicien PowerShell; si sigue, reinstalen Python 3.12 marcando "Add python.exe to PATH".
+- **Error al instalar `pyyaml` con Visual C++:** usaron una versiÃ³n de Python distinta a 3.12; creen el entorno de nuevo.
+- **`No se encontrÃ³ dataset` o 0 imÃ¡genes:** revisen que la carpeta se llame `dataset` y que las imÃ¡genes empiecen con `A.`, `R.` o `S.`.
+- **Muy lento:** es normal en CPU. Dejen la corrida terminar; el tiempo queda en `segundos` del JSON.
+- **`SyntaxWarning: invalid escape sequence`:** es solo un aviso sobre texto de ayuda; no afecta los resultados.
+
+## Advertencia metodolÃ³gica
+
+Los nombres de archivo no tienen ID de fruto, asÃ­ que la particiÃ³n es por imagen y puede haber fuga
+de datos entre entrenamiento y validaciÃ³n. El modelo final tambiÃ©n acierta poco en imÃ¡genes sanas
+(acierto exacto en 9 de 58 en test), y eso debe presentarse como limitaciÃ³n.
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Move-Item -Path "$env:USERPROFILE\Downloads\dataset" -Destination ".\dataset"
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Get-ChildItem .\dataset | Select-Object -First 5
+
+
+
+    Directorio: C:\Users\emili\Desktop\Pipeline-Paltas-CNN\dataset
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        11/15/2026   7:48 AM          26955 A.0.jpg
+-a----        11/15/2026   7:48 AM          42647 A.1.jpg
+-a----        11/15/2026   7:48 AM          29478 A.10.jpg
+-a----        11/15/2026   7:48 AM          46162 A.100.jpg
+-a----        11/15/2026   7:48 AM          49249 A.101.jpg
+
+
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> Get-ChildItem .\dataset | Select-Object -First 5
+
+
+
+    Directorio: C:\Users\emili\Desktop\Pipeline-Paltas-CNN\dataset
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        11/15/2026   7:48 AM          26955 A.0.jpg
+-a----        11/15/2026   7:48 AM          42647 A.1.jpg
+-a----        11/15/2026   7:48 AM          29478 A.10.jpg
+-a----        11/15/2026   7:48 AM          46162 A.100.jpg
+-a----        11/15/2026   7:48 AM          49249 A.101.jpg
+
+
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN> python pipeline.py --data dataset --modo kfold --opt sgd --epochs 15
+Dispositivo: cpu
+Imágenes: 669  (A=178, R=203, S=288)
+
+Fold 1/5  train=428  val=107
+  epoca 1/15  loss_train=0.9935  loss_val=0.6918
+  epoca 2/15  loss_train=0.9907  loss_val=0.6864
+  epoca 3/15  loss_train=0.9914  loss_val=0.6811
+  epoca 4/15  loss_train=0.9868  loss_val=0.6796
+  epoca 5/15  loss_train=0.9867  loss_val=0.6794
+  epoca 6/15  loss_train=0.9821  loss_val=0.6795
+  epoca 7/15  loss_train=0.9848  loss_val=0.6798
+  epoca 8/15  loss_train=0.9813  loss_val=0.6792
+  epoca 9/15  loss_train=0.9809  loss_val=0.6792
+  epoca 10/15  loss_train=0.9809  loss_val=0.6791
+  epoca 11/15  loss_train=0.9784  loss_val=0.6792
+  epoca 12/15  loss_train=0.9745  loss_val=0.6786
+  epoca 13/15  loss_train=0.9782  loss_val=0.6778
+  epoca 14/15  loss_train=0.9768  loss_val=0.6785
+  epoca 15/15  loss_train=0.9740  loss_val=0.6783
+  val: {'F1_antracnosis': 0.4, 'AUC_antracnosis': 0.5495, 'F1_roña': 0.4324, 'AUC_roña': 0.6646, 'subset_accuracy': 0.3458, 'hamming_loss': 0.4346}
+  test: {'F1_antracnosis': 0.3789, 'AUC_antracnosis': 0.5974, 'F1_roña': 0.5161, 'AUC_roña': 0.6892, 'subset_accuracy': 0.3806, 'hamming_loss': 0.3881}
+
+Fold 2/5  train=428  val=107
+  epoca 1/15  loss_train=0.9910  loss_val=0.7096
+  epoca 2/15  loss_train=0.9870  loss_val=0.7029
+  epoca 3/15  loss_train=0.9882  loss_val=0.6914
+  epoca 4/15  loss_train=0.9841  loss_val=0.6881
+  epoca 5/15  loss_train=0.9821  loss_val=0.6871
+  epoca 6/15  loss_train=0.9842  loss_val=0.6854
+  epoca 7/15  loss_train=0.9815  loss_val=0.6839
+  epoca 8/15  loss_train=0.9784  loss_val=0.6826
+  epoca 9/15  loss_train=0.9782  loss_val=0.6810
+  epoca 10/15  loss_train=0.9750  loss_val=0.6800
+  epoca 11/15  loss_train=0.9738  loss_val=0.6788
+  epoca 12/15  loss_train=0.9718  loss_val=0.6775
+  epoca 13/15  loss_train=0.9701  loss_val=0.6758
+  epoca 14/15  loss_train=0.9689  loss_val=0.6752
+  epoca 15/15  loss_train=0.9709  loss_val=0.6740
+  val: {'F1_antracnosis': 0.4792, 'AUC_antracnosis': 0.5875, 'F1_roña': 0.6329, 'AUC_roña': 0.8621, 'subset_accuracy': 0.3925, 'hamming_loss': 0.3692}
+  test: {'F1_antracnosis': 0.381, 'AUC_antracnosis': 0.5449, 'F1_roña': 0.6071, 'AUC_roña': 0.7553, 'subset_accuracy': 0.3507, 'hamming_loss': 0.4067}
+
+Fold 3/5  train=428  val=107
+  epoca 1/15  loss_train=0.9940  loss_val=0.6703
+  epoca 2/15  loss_train=0.9900  loss_val=0.6731
+  epoca 3/15  loss_train=0.9882  loss_val=0.6748
+  epoca 4/15  loss_train=0.9865  loss_val=0.6746
+  epoca 5/15  loss_train=0.9855  loss_val=0.6752
+  epoca 6/15  loss_train=0.9861  loss_val=0.6753
+  epoca 7/15  loss_train=0.9834  loss_val=0.6752
+  epoca 8/15  loss_train=0.9812  loss_val=0.6751
+  epoca 9/15  loss_train=0.9797  loss_val=0.6741
+  epoca 10/15  loss_train=0.9782  loss_val=0.6744
+  epoca 11/15  loss_train=0.9809  loss_val=0.6735
+  epoca 12/15  loss_train=0.9781  loss_val=0.6734
+  epoca 13/15  loss_train=0.9706  loss_val=0.6724
+  epoca 14/15  loss_train=0.9723  loss_val=0.6724
+  epoca 15/15  loss_train=0.9703  loss_val=0.6725
+  val: {'F1_antracnosis': 0.12, 'AUC_antracnosis': 0.5195, 'F1_roña': 0.525, 'AUC_roña': 0.7071, 'subset_accuracy': 0.3458, 'hamming_loss': 0.3832}
+  test: {'F1_antracnosis': 0.3143, 'AUC_antracnosis': 0.6141, 'F1_roña': 0.5435, 'AUC_roña': 0.7175, 'subset_accuracy': 0.4179, 'hamming_loss': 0.3358}
+
+Fold 4/5  train=428  val=107
+  epoca 1/15  loss_train=0.9978  loss_val=0.6920
+  epoca 2/15  loss_train=0.9953  loss_val=0.6764
+  epoca 3/15  loss_train=0.9936  loss_val=0.6692
+  epoca 4/15  loss_train=0.9905  loss_val=0.6684
+  epoca 5/15  loss_train=0.9898  loss_val=0.6691
+  epoca 6/15  loss_train=0.9874  loss_val=0.6696
+  epoca 7/15  loss_train=0.9855  loss_val=0.6708
+  epoca 8/15  loss_train=0.9831  loss_val=0.6706
+  epoca 9/15  loss_train=0.9811  loss_val=0.6709
+  epoca 10/15  loss_train=0.9769  loss_val=0.6701
+  epoca 11/15  loss_train=0.9798  loss_val=0.6709
+  epoca 12/15  loss_train=0.9770  loss_val=0.6707
+  epoca 13/15  loss_train=0.9744  loss_val=0.6697
+  epoca 14/15  loss_train=0.9721  loss_val=0.6706
+  epoca 15/15  loss_train=0.9708  loss_val=0.6699
+  val: {'F1_antracnosis': 0.0, 'AUC_antracnosis': 0.6835, 'F1_roña': 0.54, 'AUC_roña': 0.7703, 'subset_accuracy': 0.4766, 'hamming_loss': 0.3458}
+  test: {'F1_antracnosis': 0.0, 'AUC_antracnosis': 0.544, 'F1_roña': 0.5739, 'AUC_roña': 0.7695, 'subset_accuracy': 0.5149, 'hamming_loss': 0.3134}
+
+Fold 5/5  train=428  val=107
+  epoca 1/15  loss_train=0.9938  loss_val=0.6838
+  epoca 2/15  loss_train=0.9947  loss_val=0.6850
+  epoca 3/15  loss_train=0.9864  loss_val=0.6844
+  epoca 4/15  loss_train=0.9873  loss_val=0.6834
+  epoca 5/15  loss_train=0.9849  loss_val=0.6825
+  epoca 6/15  loss_train=0.9803  loss_val=0.6814
+  epoca 7/15  loss_train=0.9829  loss_val=0.6806
+  epoca 8/15  loss_train=0.9823  loss_val=0.6800
+  epoca 9/15  loss_train=0.9761  loss_val=0.6790
+  epoca 10/15  loss_train=0.9783  loss_val=0.6780
+  epoca 11/15  loss_train=0.9775  loss_val=0.6772
+  epoca 12/15  loss_train=0.9810  loss_val=0.6761
+  epoca 13/15  loss_train=0.9799  loss_val=0.6759
+  epoca 14/15  loss_train=0.9758  loss_val=0.6755
+  epoca 15/15  loss_train=0.9745  loss_val=0.6750
+  val: {'F1_antracnosis': 0.4828, 'AUC_antracnosis': 0.6279, 'F1_roña': 0.5, 'AUC_roña': 0.6548, 'subset_accuracy': 0.4019, 'hamming_loss': 0.3879}
+  test: {'F1_antracnosis': 0.4643, 'AUC_antracnosis': 0.5974, 'F1_roña': 0.5412, 'AUC_roña': 0.6819, 'subset_accuracy': 0.4104, 'hamming_loss': 0.3694}
+
+Media ± desv (val y test):
+  val_F1_antracnosis: 0.2964 ± 0.2224
+  val_AUC_antracnosis: 0.5936 ± 0.0647
+  val_F1_roña: 0.5261 ± 0.0726
+  val_AUC_roña: 0.7318 ± 0.0859
+  val_subset_accuracy: 0.3925 ± 0.0537
+  val_hamming_loss: 0.3841 ± 0.0326
+  test_F1_antracnosis: 0.3077 ± 0.1801
+  test_AUC_antracnosis: 0.5796 ± 0.0328
+  test_F1_roña: 0.5564 ± 0.0350
+  test_AUC_roña: 0.7227 ± 0.0389
+  test_subset_accuracy: 0.4149 ± 0.0619
+  test_hamming_loss: 0.3627 ± 0.0380
+
+Listo. Resultados en: C:\Users\emili\Desktop\Pipeline-Paltas-CNN\resultados
+(venv) PS C:\Users\emili\Desktop\Pipeline-Paltas-CNN>

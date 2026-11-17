@@ -1,0 +1,6 @@
+CUDA disponible: False
+Name                                            NumberOfCores NumberOfLogicalProcessors
+----                                            ------------- -------------------------
+AMD Ryzen 7 5700X 8-Core Processor                          8                        16
+RAM total: 32.0 GB
+NVIDIA GeForce RTX 5060 Ti 

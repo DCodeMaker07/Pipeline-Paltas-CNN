@@ -1,0 +1,12 @@
+Name                                            NumberOfCores NumberOfLogicalProcessors
+----                                            ------------- -------------------------
+AMD Ryzen 7 8845HS w/ Radeon 780M Graphics                  8                        16
+
+RAM total: 16.0 GB
+
+Name                               VRAM_GB
+----                               -------
+NVIDIA GeForce RTX 4050 Laptop GPU       4
+AMD Radeon 780M Graphics               0.5
+
+CUDA disponible: False
