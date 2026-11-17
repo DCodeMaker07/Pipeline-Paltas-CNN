@@ -95,9 +95,3 @@ compartan esa carpeta.
 - **`No se encontró dataset` o 0 imágenes:** revisen que la carpeta se llame `dataset` y que las imágenes empiecen con `A.`, `R.` o `S.`.
 - **Muy lento:** es normal en CPU. Dejen la corrida terminar; el tiempo queda en `segundos` del JSON.
 - **`SyntaxWarning: invalid escape sequence`:** es solo un aviso sobre texto de ayuda; no afecta los resultados.
-
-## Advertencia metodológica
-
-Los nombres de archivo no tienen ID de fruto, así que la partición es por imagen y puede haber fuga
-de datos entre entrenamiento y validación. El modelo final también acierta poco en imágenes sanas
-(acierto exacto en 9 de 58 en test), y eso debe presentarse como limitación.
