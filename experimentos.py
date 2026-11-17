@@ -1,18 +1,3 @@
-"""Experimentos para las preguntas 2, 3, 6, 7, 10 y 11.
-
-Usa la misma partición y métricas que pipeline.py (test fijo 20%, validación 20% del resto).
-
-Subcomandos (en orden recomendado):
-  buscar        Random Search de hiperparámetros                     (preguntas 2 y 3)
-  sensibilidad  Un hiperparámetro a la vez alrededor del mejor        (pregunta 6)
-  arquitecturas CNN propia vs MobileNetV2 vs ResNet-18 + McNemar      (pregunta 7)
-  final         Entrena el mejor modelo y evalúa una sola vez en test (pregunta 10)
-  complejidad   Parámetros, FLOPs, memoria, tamaño y tiempo           (preguntas 7 y 11)
-
-Ejemplos:
-  .\.venv\Scripts\python.exe experimentos.py buscar --data dataset --n 10 --epochs 10
-  .\.venv\Scripts\python.exe experimentos.py complejidad
-"""
 import argparse
 import csv
 import io
@@ -63,12 +48,13 @@ def prep(xb, imnet=False):
 class CNNConfig(nn.Module):
     """CNN de la diapositiva 4 con hiperparámetros configurables."""
 
-    def __init__(self, bloques=4, filtros=32, activ="gelu", dropout=0.3):
+    def __init__(self, bloques=4, filtros=32, activ="gelu", dropout=0.3, bn=True):
         super().__init__()
         act = {"relu": nn.ReLU, "leaky": lambda: nn.LeakyReLU(0.1), "gelu": nn.GELU}[activ]
         capas, cin, c = [], 3, filtros
         for _ in range(bloques):
-            capas += [nn.Conv2d(cin, c, 3, padding=1), nn.BatchNorm2d(c), act(), nn.MaxPool2d(2)]
+            norm = [nn.BatchNorm2d(c)] if bn else []
+            capas += [nn.Conv2d(cin, c, 3, padding=1), *norm, act(), nn.MaxPool2d(2)]
             cin, c = c, c * 2
         self.features = nn.Sequential(*capas)
         self.clf = nn.Sequential(
@@ -207,12 +193,14 @@ def cmd_sensibilidad(a, D, dev):
 
 # ---------- Pregunta 7: comparación de arquitecturas ----------
 def cmd_arquitecturas(a, D, dev):
-    # Mismo optimizador (Adam), mismas épocas, mismo lote y mismo test.
-    # La tasa de aprendizaje es menor para los modelos preentrenados (práctica estándar de transfer learning).
+    # Mismo optimizador (Adam), misma tasa (la ganadora de la búsqueda), mismo lote, mismas épocas y mismo test.
+    # Así la única diferencia entre modelos es la arquitectura.
+    LR = 1.2349482735064392e-4
+    LOTE = 16
     cfgs = {
-        "cnn": ("cnn", None, False, 1e-3),
-        "mobilenet_v2": ("mobilenet_v2", None, True, 1e-4),
-        "resnet18": ("resnet18", None, True, 1e-4),
+        "cnn": ("cnn", None, False, LR),
+        "mobilenet_v2": ("mobilenet_v2", None, True, LR),
+        "resnet18": ("resnet18", None, True, LR),
     }
     Yte = D["Y"][D["te"]].numpy().astype(int)
     preds, filas = {}, []
@@ -220,7 +208,7 @@ def cmd_arquitecturas(a, D, dev):
         t0 = time.time()
         fijar()
         m = entrenar(arch, cfg, D["X"][D["tr"]], D["Y"][D["tr"]], a.epochs,
-                     "adam", lr, 0.0, 32, imnet, dev)
+                     "adam", lr, 0.0, LOTE, imnet, dev)
         P = predecir(m, D["X"][D["te"]], dev, imnet)
         preds[nombre] = (P >= 0.5).astype(int)
         met = pl.metricas(Yte, P)
@@ -245,6 +233,33 @@ def cmd_arquitecturas(a, D, dev):
     guardar_csv(OUT / "mcnemar.csv", comparaciones)
     for c in comparaciones:
         print(f"McNemar {c['A']} vs {c['B']}: p={c['p_mcnemar_exacta']:.4f}")
+
+
+# ---------- Pregunta 8 y 12: ablación de regularización y tamaño de lote ----------
+def cmd_ablacion(a, D, dev):
+    base = json.loads((OUT / "mejor_config.json").read_text(encoding="utf-8"))
+    cfg_reg = dict(bloques=base["bloques"], filtros=base["filtros"], activ=base["activ"], dropout=base["dropout"])
+    cfg_sin = dict(cfg_reg, dropout=0.0, bn=False)
+    variantes = {
+        "con_regularizacion_lote16": (cfg_reg, 16),
+        "sin_bn_ni_dropout_lote16": (cfg_sin, 16),
+        "con_regularizacion_lote32": (cfg_reg, 32),
+    }
+    Yva = D["Y"][D["va"]].numpy().astype(int)
+    Yte = D["Y"][D["te"]].numpy().astype(int)
+    filas = []
+    for nombre, (cfg, lote) in variantes.items():
+        t0 = time.time()
+        fijar()
+        m = entrenar("cnn", cfg, D["X"][D["tr"]], D["Y"][D["tr"]], a.epochs,
+                     base["opt"], base["lr"], base["wd"], lote, False, dev)
+        seg = round(time.time() - t0, 1)
+        for conjunto, idx, Y in [("validacion", "va", Yva), ("prueba", "te", Yte)]:
+            met = pl.metricas(Y, predecir(m, D["X"][D[idx]], dev))
+            filas.append({"variante": nombre, "conjunto": conjunto, "lote": lote, **met,
+                          "segundos_entrenamiento": seg})
+            print(nombre, conjunto, {k: round(v, 4) for k, v in met.items()})
+    guardar_csv(OUT / "ablacion.csv", filas)
 
 
 # ---------- Pregunta 10: modelo final ----------
@@ -334,7 +349,7 @@ def cmd_complejidad(a, dev):
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for nombre in ["buscar", "sensibilidad", "arquitecturas", "final", "complejidad"]:
+    for nombre in ["buscar", "sensibilidad", "arquitecturas", "final", "complejidad", "ablacion"]:
         s = sub.add_parser(nombre)
         s.add_argument("--data", default="dataset")
         s.add_argument("--epochs", type=int, default=10)
@@ -350,7 +365,7 @@ def main():
     fijar()
     D = cargar_todo(a.data)
     {"buscar": cmd_buscar, "sensibilidad": cmd_sensibilidad, "arquitecturas": cmd_arquitecturas,
-     "final": cmd_final}[a.cmd](a, D, dev)
+     "final": cmd_final, "ablacion": cmd_ablacion}[a.cmd](a, D, dev)
 
 
 if __name__ == "__main__":
