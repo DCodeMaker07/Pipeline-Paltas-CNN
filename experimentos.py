@@ -21,6 +21,8 @@ OUT = Path("resultados")
 IMNET_MEAN = torch.tensor([0.485, 0.456, 0.406]).view(1, 3, 1, 1)
 IMNET_STD = torch.tensor([0.229, 0.224, 0.225]).view(1, 3, 1, 1)
 
+# Pregunta 2: este es el espacio de búsqueda de hiperparámetros: los valores que puede tomar
+# cada uno. La tasa de aprendizaje no está aquí porque se muestrea aparte, en escala log.
 ESPACIO = {
     "bloques": [3, 4, 5],
     "filtros": [8, 16, 32],
@@ -45,6 +47,10 @@ def prep(xb, imnet=False):
     return x
 
 
+# Pregunta 1: aquí defino mi CNN propia, la que elegí como modelo principal.
+# Son 4 bloques de Conv 3x3 -> BatchNorm -> GELU -> MaxPool, con 32, 64, 128 y 256 filtros.
+# Después va global average pooling, una densa de 64 neuronas con dropout y una salida de 2.
+# La elegí por su tamaño: tiene 405,954 parámetros entrenables.
 class CNNConfig(nn.Module):
     """CNN de la diapositiva 4 con hiperparámetros configurables."""
 
@@ -66,6 +72,9 @@ class CNNConfig(nn.Module):
         return self.clf(self.features(x))
 
 
+# Pregunta 1: aquí armo las tres arquitecturas que comparé: mi CNN propia y dos modelos
+# preentrenados en ImageNet (MobileNetV2 y ResNet-18). En los preentrenados solo cambio la
+# última capa por una de 2 salidas, para que prediga antracnosis y roña.
 def crear_modelo(nombre, cfg=None):
     if nombre == "cnn":
         return CNNConfig(**(cfg or {}))
@@ -141,13 +150,18 @@ def evaluar_cfg(D, c, epochs, dev):
     return met
 
 
+# Pregunta 2 y 3: genera una configuración al azar dentro de ESPACIO.
+# Con la misma semilla (42) siempre salen las mismas configuraciones, así los resultados se reproducen.
 def muestrear(rng):
     c = {k: rng.choice(v) for k, v in ESPACIO.items()}
     c["lr"] = float(10 ** rng.uniform(-4, -2))
     return c
 
 
-# ---------- Pregunta 2 y 3: Random Search ----------
+# ---------- Pregunta 3: Random Search ----------
+# Pregunta 3: aquí implemento Random Search. Pruebo N configuraciones al azar (N = 10 por defecto),
+# entreno cada una y calculo su score en validación: (F1 antracnosis + F1 roña) / 2.
+# Guardo todas en busqueda.csv y la de mayor score en mejor_config.json.
 def cmd_buscar(a, D, dev):
     rng = random.Random(SEED)
     filas = []
