@@ -13,6 +13,8 @@ from sklearn.metrics import f1_score, roc_auc_score
 from sklearn.model_selection import StratifiedKFold, train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 
+import bitacora
+
 IMG = 224
 SEED = 42
 PREFIJO = {"A": [1.0, 0.0], "R": [0.0, 1.0], "S": [0.0, 0.0]}
@@ -146,11 +148,14 @@ def main():
     ap.add_argument("--epochs", type=int, default=10)
     ap.add_argument("--k", type=int, default=5)
     ap.add_argument("--out", default="resultados")
+    ap.add_argument("--pregunta", type=int, default=None)
     args = ap.parse_args()
 
     fijar_semilla()
     dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Dispositivo:", dev)
+    t_inicio = time.time()
+    bitacora.encabezado(f"Entrenamiento {args.modo} con {args.opt} (pipeline.py)", args.pregunta)
     out = Path(args.out)
     out.mkdir(exist_ok=True)
 
@@ -213,6 +218,7 @@ def main():
     for k, v in resumen.items():
         print(f"  {k}: {v['media']:.4f} ± {v['desv']:.4f}")
     print(f"\nListo. Resultados en: {out.resolve()}")
+    bitacora.cerrar(t_inicio, out, f"pipeline_{args.opt}_{args.modo}", {"Dispositivo": dev, "Folds": len(splits), "Épocas": args.epochs})
 
 
 if __name__ == "__main__":
