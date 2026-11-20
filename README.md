@@ -7,6 +7,10 @@ las dos enfermedades. El dataset actual no tiene co-infecciones, así que ese ca
 **Quién corre qué:** ver `INSTRUCCIONES_EQUIPO.md`. Este README solo explica el entorno, el dataset
 y los scripts. Cada integrante ejecuta únicamente los comandos de sus preguntas.
 
+## Sobre el proyecto
+
+Proyecto de visión por computadora que usa una CNN en PyTorch para detectar roña (R) y antracnosis (A) en frutos de palta a partir de imágenes de 224×224. El dataset tiene 669 imágenes (A=178, R=203, sanas=288). El código está organizado en módulos: el entrenamiento y el modelo final en `entrenamiento.py`, y el resto son scripts de experimentos, comparación, medición de recursos y análisis de resultados.
+
 ## 0. Modelo final
 
 | Elemento | Valor |
