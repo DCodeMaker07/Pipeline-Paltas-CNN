@@ -7,7 +7,7 @@ Lean primero el README.md (entorno, GPU y dataset). Aquí está lo que hace cada
 2. Creen o actualicen el entorno con `.\crear_entorno.ps1`. Si tienen GPU NVIDIA, sigan la sección 1.1 del README.
 3. Coloquen la carpeta `dataset` (669 imágenes) dentro de `pipeline-palta`. No viene en el repo.
 4. Ejecuten **solo** los comandos de sus preguntas. Usen siempre `--pregunta N` para que la consola muestre el número.
-5. Cada video se graba en su propio equipo y empieza mostrando CPU, RAM y GPU (disclaimer de 10 a 15 s).
+5. Cada video se graba en su propio equipo y empieza mostrando CPU, RAM y GPU (disclaimer de 10 a 15 s). En ese disclaimer digan si la corrida fue en GPU o en CPU. Deivid, Harold y Giovanni tienen GPU; el resto declara el dispositivo que use.
 6. Nombren cada video `preg_N_nombre_modelo` (por ejemplo, `preg_4_adam_leslie.mp4`).
 
 ## Reglas
@@ -60,7 +60,7 @@ Este comando solo reporta validación (los resultados quedan en `resultados\abla
       .\.venv\Scripts\python.exe recursos.py --pregunta 12 --semillas 42 7 123 1 2026 --salida resultados_recursos_cpu
       Remove-Item Env:CUDA_VISIBLE_DEVICES
 
-Revisen que la segunda línea diga `Dispositivo: cuda` en la corrida de GPU y `Dispositivo: cpu` en la de CPU. Las dos corridas las hace él en su propia PC: no mezclen tablas de otros equipos.
+Revisen que la segunda línea diga `Dispositivo: cuda` en la corrida de GPU y `Dispositivo: cpu` en la de CPU. Las dos corridas las hace él en su propia PC: no mezclen tablas de otros equipos. P12 es la única pregunta donde el hardware cambia los tiempos y la memoria, así que los tiempos de Giovanni no se comparan con los de los demás integrantes.
 
 ## Qué entregar a Deivid
 - Carpeta de resultados de cada comando.
