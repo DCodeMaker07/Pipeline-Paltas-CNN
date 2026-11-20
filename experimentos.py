@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 from torchvision import models
 
+import bitacora
 import pipeline as pl
 
 SEED = pl.SEED
@@ -260,7 +261,6 @@ def cmd_ablacion(a, D, dev):
         "con_regularizacion_lote32": (cfg_reg, 32),
     }
     Yva = D["Y"][D["va"]].numpy().astype(int)
-    Yte = D["Y"][D["te"]].numpy().astype(int)
     filas = []
     for nombre, (cfg, lote) in variantes.items():
         t0 = time.time()
@@ -268,7 +268,7 @@ def cmd_ablacion(a, D, dev):
         m = entrenar("cnn", cfg, D["X"][D["tr"]], D["Y"][D["tr"]], a.epochs,
                      base["opt"], base["lr"], base["wd"], lote, False, dev)
         seg = round(time.time() - t0, 1)
-        for conjunto, idx, Y in [("validacion", "va", Yva), ("prueba", "te", Yte)]:
+        for conjunto, idx, Y in [("validacion", "va", Yva)]:  # solo validación: la prueba se usa una vez, en pregunta 10
             met = pl.metricas(Y, predecir(m, D["X"][D[idx]], dev))
             filas.append({"variante": nombre, "conjunto": conjunto, "lote": lote, **met,
                           "segundos_entrenamiento": seg})
@@ -367,19 +367,24 @@ def main():
         s = sub.add_parser(nombre)
         s.add_argument("--data", default="dataset")
         s.add_argument("--epochs", type=int, default=10)
+        s.add_argument("--pregunta", type=int, default=None)
         if nombre == "buscar":
             s.add_argument("--n", type=int, default=10)
     a = ap.parse_args()
     OUT.mkdir(exist_ok=True)
     dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Dispositivo:", dev)
+    t0 = time.time()
+    bitacora.encabezado(f"Comando {a.cmd} de experimentos.py", a.pregunta)
     if a.cmd == "complejidad":
         cmd_complejidad(a, dev)
+        bitacora.cerrar(t0, OUT, a.cmd, {"Dispositivo": dev})
         return
     fijar()
     D = cargar_todo(a.data)
     {"buscar": cmd_buscar, "sensibilidad": cmd_sensibilidad, "arquitecturas": cmd_arquitecturas,
      "final": cmd_final, "ablacion": cmd_ablacion}[a.cmd](a, D, dev)
+    bitacora.cerrar(t0, OUT, a.cmd, {"Dispositivo": dev, "Épocas": a.epochs})
 
 
 if __name__ == "__main__":
